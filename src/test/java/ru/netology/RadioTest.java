@@ -60,6 +60,19 @@ public class RadioTest {
     }
 
     @Test
+    public void shouldDecreaseStation1s() {
+        Radio radio = new Radio();
+
+        radio.setCurrentRadioStationNumber(2);
+        radio.prevRadioStation();
+
+        int expected = 1;
+        int actual = radio.getCurrentRadioStationNumber();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
     public void shouldDecreaseStation0s() {
         Radio radio = new Radio();
 
@@ -80,6 +93,19 @@ public class RadioTest {
         radio.prevRadioStation();
 
         int expected = 9;
+        int actual = radio.getCurrentRadioStationNumber();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldIncreaseStation8s() {
+        Radio radio = new Radio();
+        radio.setCurrentRadioStationNumber(7);
+
+        radio.nextRadioStation();
+
+        int expected = 8;
         int actual = radio.getCurrentRadioStationNumber();
 
         Assertions.assertEquals(expected, actual);
