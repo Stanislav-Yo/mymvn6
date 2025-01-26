@@ -1,62 +1,72 @@
 package ru.netology;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+
 public class Radio {
-    private int currentRadioStationNumber;
-    private int currentVolume;
+    private int startingStation = 0;
+    private int lastStation= 9;
+    private int numberOfStations = 10;
+    private int currentRadioStationNumber = startingStation;
+    private int minVolume = 0;
+    private int maxVolume = 100;
+    private int currentVolume = minVolume;
 
-    public int getCurrentRadioStationNumber() {
-        return currentRadioStationNumber;
-    }
-
-    public void setCurrentRadioStationNumber(int newCurrentRadioStationNumber) {
-        if (newCurrentRadioStationNumber < 0) {
-            newCurrentRadioStationNumber = 9;
-        }
-        if (newCurrentRadioStationNumber > 9) {
-            newCurrentRadioStationNumber = 0;
-        }
-        currentRadioStationNumber = newCurrentRadioStationNumber;
-    }
-
-    public int getCurrentVolume() {
-        return currentVolume;
-    }
-
-    public void setCurrentVolume(int newCurrentVolume) {
-        if (newCurrentVolume > 100) {
-            newCurrentVolume = 100;
-        }
-        if (newCurrentVolume < 0) {
-            newCurrentVolume = 0;
-        }
-        currentVolume = newCurrentVolume;
-    }
-
-    public void increaseSetToMaxVolume() {
-        currentVolume = 100;
-    }
-
-    public void decreaseSetToMinVolume() {
-        currentVolume = 0;
+    public Radio(int numberOfStations) {
+        this.numberOfStations = numberOfStations;
+        this.lastStation = numberOfStations - 1;
     }
 
     public void nextRadioStation() {
-        int nextStation = currentRadioStationNumber + 1;
-        setCurrentRadioStationNumber(nextStation);
+        if (currentRadioStationNumber < lastStation) {
+            currentRadioStationNumber++;
+        } else {
+            currentRadioStationNumber = startingStation;
+        }
     }
 
     public void prevRadioStation() {
-        int prevStation = currentRadioStationNumber - 1;
-        setCurrentRadioStationNumber(prevStation);
+        if (currentRadioStationNumber > startingStation) {
+            currentRadioStationNumber--;
+        } else {
+            currentRadioStationNumber = lastStation;
+        }
     }
 
-    public void plusVolume() {
-        int moreVol = currentVolume + 1;
-        setCurrentVolume(moreVol);
+    public void increaseVolume() {
+        if (currentVolume < maxVolume) {
+            currentVolume++;
+        }
     }
 
-    public void minusVolume() {
-        int lessVol = currentVolume - 1;
-        setCurrentVolume(lessVol);
+    public void decreaseVolume() {
+        if (currentVolume > minVolume) {
+            currentVolume--;
+        }
+    }
+
+    public void setMaxVolume() {
+        currentVolume = maxVolume;
+    }
+
+    public void setMinVolume() {
+        currentVolume = minVolume;
+    }
+
+    public void setCurrentVolume(int newCurrentVolume) {
+        if (newCurrentVolume < minVolume) {
+            currentVolume = minVolume;
+        } else if (newCurrentVolume > maxVolume) {
+            currentVolume = maxVolume;
+        } else {
+            currentVolume = newCurrentVolume;
+        }
     }
 }
+
+
